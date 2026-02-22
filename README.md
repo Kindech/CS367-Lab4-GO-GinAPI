@@ -37,6 +37,7 @@ This project is a REST API for managing student records, built with **Go** and t
 |   DELETE | /students/:id |	  Delete a student by ID	                 |   204 No Content, 404 Not Found            |
 
 **Example Request Body (POST / PUT)**
+```json
 {
   "id": "6609650160",
   "name": "Kitchaya Kindech",
