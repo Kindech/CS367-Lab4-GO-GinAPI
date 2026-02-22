@@ -16,7 +16,7 @@ func main() {
 	db := config.ConnectDB()
 	defer db.Close()
 
-	// 2. Setup Layers แบบครบสูตร (Dependency Injection)
+	// 2. Setup Layers (Dependency Injection)
 	repo := repositories.NewStudentRepository(db)
 	service := services.NewStudentService(repo)
 	handler := handlers.NewStudentHandler(service)

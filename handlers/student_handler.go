@@ -2,24 +2,22 @@ package handlers
 
 import (
 	"go-api-gin/models"
-	"go-api-gin/services" // เปลี่ยนมาใช้ package services
+	"go-api-gin/services"
 	"net/http"
 
 	"github.com/gin-gonic/gin"
 )
 
 type StudentHandler struct {
-	service *services.StudentService // เปลี่ยนจาก repo เป็น service
+	service *services.StudentService
 }
 
 func NewStudentHandler(service *services.StudentService) *StudentHandler {
 	return &StudentHandler{service: service}
 }
 
-// (โค้ดฟังก์ชัน GET, POST, PUT, DELETE ข้างในยังเหมือนเดิม แค่เปลี่ยน h.repo เป็น h.service)
-
 func (h *StudentHandler) GetStudents(c *gin.Context) {
-	students, err := h.service.GetAllStudents() // <--- แก้ตรงนี้
+	students, err := h.service.GetAllStudents()
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{"error": "Database error"})
 		return
@@ -29,7 +27,7 @@ func (h *StudentHandler) GetStudents(c *gin.Context) {
 
 func (h *StudentHandler) GetStudentByID(c *gin.Context) {
 	id := c.Param("id")
-	student, err := h.service.GetStudentByID(id) // <--- แก้ตรงนี้
+	student, err := h.service.GetStudentByID(id)
 	if err != nil {
 		c.JSON(http.StatusNotFound, gin.H{"error": "Student not found"})
 		return
@@ -44,7 +42,7 @@ func (h *StudentHandler) CreateStudent(c *gin.Context) {
 		return
 	}
 
-	if err := h.service.CreateStudent(s); err != nil { // <--- แก้ตรงนี้
+	if err := h.service.CreateStudent(s); err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to create student"})
 		return
 	}
@@ -59,7 +57,7 @@ func (h *StudentHandler) UpdateStudent(c *gin.Context) {
 		return
 	}
 
-	if err := h.service.UpdateStudent(id, s); err != nil { // <--- แก้ตรงนี้
+	if err := h.service.UpdateStudent(id, s); err != nil {
 		c.JSON(http.StatusNotFound, gin.H{"error": "Student not found"})
 		return
 	}
@@ -69,7 +67,7 @@ func (h *StudentHandler) UpdateStudent(c *gin.Context) {
 
 func (h *StudentHandler) DeleteStudent(c *gin.Context) {
 	id := c.Param("id")
-	if err := h.service.DeleteStudent(id); err != nil { // <--- แก้ตรงนี้
+	if err := h.service.DeleteStudent(id); err != nil {
 		c.JSON(http.StatusNotFound, gin.H{"error": "Student not found"})
 		return
 	}
