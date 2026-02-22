@@ -13,7 +13,7 @@ func ConnectDB() *sql.DB {
 		log.Fatal("Failed to connect to database:", err)
 	}
 
-	// สร้างตารางเตรียมไว้
+	// 1. สร้างตารางเตรียมไว้
 	_, err = db.Exec(`
 	CREATE TABLE IF NOT EXISTS students (
 		id TEXT PRIMARY KEY,
@@ -24,6 +24,13 @@ func ConnectDB() *sql.DB {
 	if err != nil {
 		log.Fatal("Failed to create table:", err)
 	}
+
+	db.Exec(`
+	INSERT OR IGNORE INTO students (id, name, major, gpa) VALUES
+	('66090001', 'John', 'Computer Science', 3.80),
+	('66090002', 'Jane', 'Information Technology', 3.50),
+	('66090003', 'Mike', 'Software Engineering', 3.65)
+	`)
 
 	return db
 }
